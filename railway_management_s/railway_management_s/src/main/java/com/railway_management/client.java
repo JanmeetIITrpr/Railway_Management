@@ -9,6 +9,7 @@ public class client
 {
     public static void main(String args[])throws IOException
     {
+        long start = System.currentTimeMillis();
         /**************************/
         int firstLevelThreads = 3 ;   // Indicate no of users 
         /**************************/
@@ -33,5 +34,7 @@ public class client
         {
             executorService.shutdownNow();
         }
+        long end = System.currentTimeMillis();
+        System.out.println("Execution time was "+(end-start)+" ms.");
     }
 }

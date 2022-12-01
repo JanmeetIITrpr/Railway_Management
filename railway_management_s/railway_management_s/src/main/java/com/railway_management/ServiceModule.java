@@ -42,7 +42,6 @@ class QueryRunner implements Runnable
 
 
         try{
-            con.setAutoCommit(false);
             con.setTransactionIsolation(8);
             Statement statement = (Statement)con.createStatement();
             String query = "call generate_pnr()";
@@ -55,10 +54,14 @@ class QueryRunner implements Runnable
             query = "insert into tickets(pnr, booked_date, num_passenger, journey_date, train_num, coach_type) values('"+pnr+"', curdate(), '"+numberOfPassengers+"', '"+date+"', '"+trainNumber+"', '"+coachType+"');";
             statement.executeUpdate(query);
 
+            //con.setTransactionIsolation(4);
             for(String passenger : passengers) {
                 query = "call assign_berth('"+trainNumber+"', '"+date+"', '"+coachType+"', '"+passenger+"', '"+pnr+"')";
                 statement.executeUpdate(query);
             }
+
+            con.setAutoCommit(false);
+            //con.setTransactionIsolation(8);
 
             query = "select pnr, train_num, journey_date from tickets where pnr = '"+pnr+"'";
             rs = statement.executeQuery(query);
@@ -108,8 +111,8 @@ class QueryRunner implements Runnable
             while( ! clientCommand.equals("#"))
             {
                 
-                System.out.println("Recieved data <" + clientCommand + "> from client : " 
-                                    + socketConnection.getRemoteSocketAddress().toString());
+                // System.out.println("Recieved data <" + clientCommand + "> from client : " 
+                //                     + socketConnection.getRemoteSocketAddress().toString());
 
                 /*******************************************
                 //          Your DB code goes here
@@ -137,6 +140,8 @@ class QueryRunner implements Runnable
     }
 }
 
+
+
 /**
  * Main Class to controll the program flow
  */
@@ -145,7 +150,7 @@ public class ServiceModule
     // Server listens to port
     static int serverPort = 7008;
     // Max no of parallel requests the server can process
-    static int numServerCores = 5 ;         
+    static int numServerCores = 50 ;         
     //------------ Main----------------------
     public static void main(String[] args) throws IOException 
     {    

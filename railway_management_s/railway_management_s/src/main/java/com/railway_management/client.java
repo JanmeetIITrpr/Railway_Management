@@ -9,16 +9,16 @@ public class client
 {
     public static void main(String args[])throws IOException
     {
-        long start = System.currentTimeMillis();
+        //long start = System.currentTimeMillis();
         /**************************/
-        int firstLevelThreads = 3 ;   // Indicate no of users 
+        int firstLevelThreads = 16;   // Indicate no of users 
         /**************************/
         // Creating a thread pool
         ExecutorService executorService = Executors.newFixedThreadPool(firstLevelThreads);
         
         for(int i = 0; i < firstLevelThreads; i++)
         {
-            Runnable runnableTask = new invokeWorkers();    //  Pass arg, if any to constructor sendQuery(arg)
+            Runnable runnableTask = new invokeWorkers(i+1);    //  Pass arg, if any to constructor sendQuery(arg)
             executorService.submit(runnableTask) ;
         }
 
@@ -34,7 +34,7 @@ public class client
         {
             executorService.shutdownNow();
         }
-        long end = System.currentTimeMillis();
-        System.out.println("Execution time was "+(end-start)+" ms.");
+        //long end = System.currentTimeMillis();
+        //System.out.println("Execution time was "+(end-start)+" ms.");
     }
 }

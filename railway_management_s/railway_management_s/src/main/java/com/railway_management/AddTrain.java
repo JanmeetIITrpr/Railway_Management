@@ -8,10 +8,10 @@ import java.util.Arrays;
 public class AddTrain {
     public static void main(String[] args) {
         try{
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("Trainschedule.txt"));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("/home/course1/railway_management/railway_management_s/railway_management_s/TestCases/TestCases/input/Trainschedule_underflow_throughput.txt"));
 
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection)DriverManager.getConnection("jdbc:mysql://localhost:3307/railway_management", "root", "");
+            Connection con = (Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/railway_management", "root", "");
 
             for(String line; !(line = bufferedReader.readLine()).contains("#"); ){
                 String[] lineComponents = line.split(" ");

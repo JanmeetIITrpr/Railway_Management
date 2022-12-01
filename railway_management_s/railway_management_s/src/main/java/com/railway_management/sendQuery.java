@@ -13,10 +13,14 @@ import java.util.Scanner;
 
 class sendQuery implements Runnable 
 {   /**********************/
-     int sockPort = 7008 ;
+    int sockPort = 7008 ;
+    int firstLevelThreads;
+    int secondLevelThreads;
     /*********************/
-    sendQuery()
+    sendQuery(int firstLevelThreads, int secondLevelThreads)
     {
+        this.firstLevelThreads = firstLevelThreads;
+        this.secondLevelThreads = secondLevelThreads;
      // Red args if any
     }   
     @Override
@@ -28,8 +32,9 @@ class sendQuery implements Runnable
             Socket socketConnection = new Socket("localhost", sockPort) ;
             
             // Files for input queries and responses
-            String inputfile = "C:\\Users\\janme\\Downloads\\railway_management\\Input\\" + Thread.currentThread().getName() + "_input.txt" ;
-            String outputfile = "C:\\Users\\janme\\Downloads\\railway_management\\Output\\" +Thread.currentThread().getName() + "_output.txt" ;
+            String ipfn = "pool-"+firstLevelThreads+"-thread-"+secondLevelThreads;
+            String inputfile = "/home/course1/railway_management/railway_management_s/railway_management_s/TestCases/TestCases/input/input_128_underflow//" + ipfn + "_input.txt" ;
+            String outputfile = "/home/course1/railway_management/railway_management_s/railway_management_s/TestCases/TestCases/output/output_128_underflow//" +ipfn + "_output.txt" ;
 
             //-----Initialising the Input & ouput file-streams and buffers-------
             OutputStreamWriter outputStream = new OutputStreamWriter(socketConnection
